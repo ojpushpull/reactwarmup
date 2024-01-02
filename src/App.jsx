@@ -1,11 +1,22 @@
 import React from 'react';
 
 const list = [
-"1",
-"2",
-"3",
-"4",
-"5",
+{
+  title: 'React',
+  url: 'https://reactjs.org/',
+  author: 'Jordan Walke',
+  num_comments: 3,
+  points: 4,
+  objectID: 0,
+},
+{
+  title: 'Redux',
+  url: 'https://redux.js.org/',
+  author: 'Daniel, Andrew Clark',
+  num_comments: 2,
+  points: 5,
+  objectID: 1,
+},
 ];
 
 
@@ -21,7 +32,7 @@ function getTitle(title) {
   return title;
 }
 
-function App(props) {
+function App() {
   
   return (
     <div>
@@ -36,7 +47,16 @@ function App(props) {
     <input id="search" type="text" />
     <ul>
       {list.map(function (item){
-        return <li>{item}</li>;
+        return (
+        <li key={item.objectID}>
+          <span>
+            <a href={item.url}>{item.title}</a>
+          </span>
+            <span>{item.author}</span>
+            <span>{item.num_comments}</span>
+            <span>{item.points}</span>
+            </li>
+        );
       })}
     </ul>
     </div>
