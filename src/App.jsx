@@ -50,13 +50,13 @@ function App() {
   
 
 const Search = () => {
-    //
+    const [searchTerm, setSearchTerm] = React.useState('');
+
   const handleChange = (event) => {
-    // synthetic event
-    console.log(event);
+    
     // value of target (here: input HTML element)
-    console.log(event.target.value);
-  }
+    setSearchTerm(event.target.value);
+  };
 
     return (
     <div>
