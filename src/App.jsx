@@ -16,6 +16,7 @@ function getTitle(title) {
 }
 
 const App = () => {
+  console.log('App Renders')
   const stories = [
     {
       title: 'React',
@@ -34,48 +35,52 @@ const App = () => {
       objectID: 1,
     },
     ];
+    
+
+    const [searchTerm, setSearchTerm] = React.useState('React');
 
     const handleSearch = (event) => {
-      
-      console.log(event.target.value);
-    };
+    
+      // value of target (here: input HTML element)
+      setSearchTerm(event.target.value);
+      };
+
+      const searchedStories = stories.filter((story) => 
+        story.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
   
   return (
     <div>
     <h1> React im BACK</h1>
    
     {/* // B */}
-    <Search onSearch={handleSearch} />
+    <Search search={searchTerm} onSearch={handleSearch} />
     
     
     <hr />
-    <List list={stories} />
+    <List list={searchedStories} />
     </div>
     );
   };
   
 
 const Search = (props) => {
-    const [searchTerm, setSearchTerm] = React.useState('');
-
-  const handleChange = (event) => {
+  console.log('search works?')
     
-    // value of target (here: input HTML element)
-    setSearchTerm(event.target.value);
 
-    props.onSearch(event);
-  };
+
 
     return (
     <div>
     <label htmlFor="search">Search: </label>
-    <input id="search" type="text" onChange={handleChange} />
+    <input id="search" type="text" value={props.search} onChange={props.onSearch} />
     </div>
   );
 };
 
 
 const List = (props) => (
+  console.log('list rendeers'),
   <ul>
       {props.list.map((item) => (
         <Item key={item.objectID} item={item} />
