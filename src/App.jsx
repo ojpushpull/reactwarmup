@@ -15,16 +15,16 @@ function getTitle(title) {
   return title;
 }
 
-const useStorageState = (initalState) => {
-  const [searchTerm, setSearchTerm] = React.useState(
-    localStorage.getItem('search') || initalState
+const useStorageState = (key, initalState) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) || initalState
   );
 
      React.useEffect(() => {
-        localStorage.setItem('search', searchTerm);
-      }, [searchTerm]);
+        localStorage.setItem(key, value);
+      }, [value, key]);
 
-      return [searchTerm, setSearchTerm]
+      return [value, setValue];
 };
 
 const App = () => {
@@ -49,7 +49,10 @@ const App = () => {
     ];
     
 
-    const [searchTerm, setSearchTerm] = useStorageState('React');
+    const [searchTerm, setSearchTerm] = useStorageState(
+      'search',
+      'React'
+      );
 
    
       
