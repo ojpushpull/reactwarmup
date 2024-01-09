@@ -15,6 +15,18 @@ function getTitle(title) {
   return title;
 }
 
+const useStorageState = (initalState) => {
+  const [searchTerm, setSearchTerm] = React.useState(
+    localStorage.getItem('search') || initalState
+  );
+
+     React.useEffect(() => {
+        localStorage.setItem('search', searchTerm);
+      }, [searchTerm]);
+
+      return [searchTerm, setSearchTerm]
+};
+
 const App = () => {
   console.log('App Renders')
   const stories = [
@@ -37,13 +49,10 @@ const App = () => {
     ];
     
 
-    const [searchTerm, setSearchTerm] = React.useState(
-      localStorage.getItem('search') ?? 'React'
-      );
+    const [searchTerm, setSearchTerm] = useStorageState('React');
 
-      React.useEffect(() => {
-        localStorage.setItem('search', searchTerm);
-      }, [searchTerm]);
+   
+      
 
 
 
