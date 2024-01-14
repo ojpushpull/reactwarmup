@@ -47,6 +47,8 @@ const App = () => {
       objectID: 1,
     },
     ];
+
+    
     
 
     const [searchTerm, setSearchTerm] = useStorageState(
@@ -91,7 +93,7 @@ const App = () => {
   };
   
 
-const InputWithLabel = ({ id, label, value, type = 'text', onInputChange, isFocused, children, }) => {}
+const InputWithLabel = ({ id, label, value, type = 'text', onInputChange, isFocused, children, }) => {
  //A
   const inputRef = React.useRef();
 
@@ -117,6 +119,7 @@ const InputWithLabel = ({ id, label, value, type = 'text', onInputChange, isFocu
     />,
     </>
 );
+};
 
 
 
