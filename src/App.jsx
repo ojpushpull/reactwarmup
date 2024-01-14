@@ -141,12 +141,8 @@ const List = ({list, onRemoveItem }) => (
     </ul>
 );
 
-        const Item = ({ item, onRemoveItem}) => {
-          const handleRemoveItem = () => {
-            onRemoveItem(item);
-          };
+        const Item = ({ item, onRemoveItem}) => (
 
-          return (
           <li>
           <span>
             <a href={item.url}>{item.title}</a>
@@ -155,14 +151,14 @@ const List = ({list, onRemoveItem }) => (
             <span>{item.num_comments}</span>
             <span>{item.points}</span>
             <span>
-              <button type="button" onClick={handleRemoveItem}>
+              <button type="button" onClick={() => onRemoveItem(item)}>
                 Dismiss
               </button>
               </span>
             </li>
         
     );
-  };
+  
     
 
 export default App;
