@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
+const initialStories = [
+  {
+    title: 'React',
+    url: 'https://reactjs.org/',
+    author: 'Jordan Walke',
+    num_comments: 3,
+    points: 4,
+    objectID: 0,
+  },
+  {
+    title: 'Redux',
+    url: 'https://redux.js.org/',
+    author: 'Daniel, Andrew Clark',
+    num_comments: 2,
+    points: 5,
+    objectID: 1,
+  },
+  ];
 
 
  
@@ -29,26 +47,8 @@ const useStorageState = (key, initalState) => {
 
 const App = () => {
   console.log('App Renders')
-  const stories = [
-    {
-      title: 'React',
-      url: 'https://reactjs.org/',
-      author: 'Jordan Walke',
-      num_comments: 3,
-      points: 4,
-      objectID: 0,
-    },
-    {
-      title: 'Redux',
-      url: 'https://redux.js.org/',
-      author: 'Daniel, Andrew Clark',
-      num_comments: 2,
-      points: 5,
-      objectID: 1,
-    },
-    ];
-
-    
+  
+  
     
 
     const [searchTerm, setSearchTerm] = useStorageState(
@@ -56,7 +56,15 @@ const App = () => {
       'React'
       );
 
-   
+    const [stories, setStories] = React.useState(initialStories);
+
+    const handleRemoveStory = (item) => {
+      const newStories = stories.filter(
+        (story) => item.objectID !== story.objectID
+      );
+
+      setStories(newStories);
+    };
       
 
 
@@ -73,7 +81,7 @@ const App = () => {
   
   return (
     <div>
-    <h1> React im BACK</h1>
+    <h1> {welcome}{getTitle}</h1>
    
     {/* // B */}
     <InputWithLabel
@@ -87,7 +95,8 @@ const App = () => {
     
     
     <hr />
-    <List list={searchedStories} />
+    <List list={searchedStories} onRemoveItem={handleRemoveStory} />
+   
     </div>
     );
   };
@@ -123,26 +132,37 @@ const InputWithLabel = ({ id, label, value, type = 'text', onInputChange, isFocu
 
 
 
-const List = ({list}) => (
+const List = ({list, onRemoveItem }) => (
   console.log('list rendeers'),
   <ul>
-      {list.map(({ objectID, ...item }) => (
-        <Item key={objectID} {...item} />
+      {list.map((item) => (
+        <Item key={objectID} item={item} onRemoveItem={onRemoveItem} />
       ))}
     </ul>
 );
 
-        const Item = ({ title, url, author, num_comments, points }) => (
+        const Item = ({ item, onRemoveItem}) => {
+          const handleRemoveItem = () => {
+            onRemoveItem(item);
+          };
+
+          return (
           <li>
           <span>
-            <a href={url}>{title}</a>
+            <a href={item.url}>{item.title}</a>
           </span>
-            <span>{author}</span>
-            <span>{num_comments}</span>
-            <span>{points}</span>
+            <span>{item.author}</span>
+            <span>{item.num_comments}</span>
+            <span>{item.points}</span>
+            <span>
+              <button type="button" onClick={handleRemoveItem}>
+                Dismiss
+              </button>
+              </span>
             </li>
         
     );
+  };
     
 
 export default App;
