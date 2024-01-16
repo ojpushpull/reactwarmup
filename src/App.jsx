@@ -20,6 +20,14 @@ const initialStories = [
   },
   ];
 
+  const getAsyncStories = () => 
+    new Promise((resolve) =>
+    setTimeout(
+    () => resolve({ data: { stories: initialStories } }),
+    2000
+    )
+      );
+
 
  
 
@@ -56,7 +64,14 @@ const App = () => {
       'React'
       );
 
-    const [stories, setStories] = React.useState(initialStories);
+    const [stories, setStories] = React.useState([]);
+
+    React.useEffect(() => {
+      getAsyncStories().then(result => {
+        setStories(result.data.stories);
+      });
+     }, [] );
+    
 
     const handleRemoveStory = (item) => {
       const newStories = stories.filter(
@@ -81,7 +96,7 @@ const App = () => {
   
   return (
     <div>
-    <h1> {welcome}{getTitle}</h1>
+    <h1>Story time</h1>
    
     {/* // B */}
     <InputWithLabel
@@ -102,7 +117,7 @@ const App = () => {
   };
   
 
-const InputWithLabel = ({ id, label, value, type = 'text', onInputChange, isFocused, children, }) => {
+const InputWithLabel = ({ id, value, type = 'text', onInputChange, isFocused, children, }) => {
  //A
   const inputRef = React.useRef();
 
@@ -115,7 +130,7 @@ const InputWithLabel = ({ id, label, value, type = 'text', onInputChange, isFocu
   }, [isFocused]);
  return (
  <>
-    <label htmlFor={id}> {children} </label>
+    <label htmlFor={id}>{children}</label>
     &nbsp;
     {/* B */}
     <input 
@@ -123,7 +138,6 @@ const InputWithLabel = ({ id, label, value, type = 'text', onInputChange, isFocu
     id={id} 
     type={type}
     value={value}
-    autoFocus={isFocused}
     onChange={onInputChange} 
     />,
     </>
@@ -132,11 +146,11 @@ const InputWithLabel = ({ id, label, value, type = 'text', onInputChange, isFocu
 
 
 
-const List = ({list, onRemoveItem }) => (
+const List = ({ list, onRemoveItem }) => (
   console.log('list rendeers'),
   <ul>
       {list.map((item) => (
-        <Item key={objectID} item={item} onRemoveItem={onRemoveItem} />
+        <Item key={item.objectID} item={item} onRemoveItem={onRemoveItem} />
       ))}
     </ul>
 );
