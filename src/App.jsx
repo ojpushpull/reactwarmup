@@ -32,14 +32,7 @@ const initialStories = [
  
 
 
-const welcome = {
-  greeting: 'Hey',
-  title: 'React',
-}
 
-function getTitle(title) {
-  return title;
-}
 
 const useStorageState = (key, initalState) => {
   const [value, setValue] = React.useState(
@@ -80,6 +73,13 @@ const App = () => {
 
       setStories(newStories);
     };
+
+    const ReactInate = () => (
+      <span>
+      <h1> React is back </h1>
+      </span>
+    );
+
       
 
 
@@ -96,7 +96,8 @@ const App = () => {
   
   return (
     <div>
-    <h1>Story time</h1>
+    <h1>React is BACK</h1>
+   
    
     {/* // B */}
     <InputWithLabel
@@ -108,7 +109,7 @@ const App = () => {
      <strong> Search: </strong> 
     </InputWithLabel>
     
-    
+    <ReactInate />
     <hr />
     <List list={searchedStories} onRemoveItem={handleRemoveStory} />
    
