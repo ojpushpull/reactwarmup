@@ -58,11 +58,17 @@ const App = () => {
       );
 
     const [stories, setStories] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
 
     React.useEffect(() => {
+      setIsLoading(true);
+
       getAsyncStories().then(result => {
         setStories(result.data.stories);
-      });
+        setIsLoading(false);
+      })
+      .catch(() => setIsError(true));
      }, [] );
     
 
@@ -93,6 +99,7 @@ const App = () => {
       const searchedStories = stories.filter((story) => 
         story.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
+
   
   return (
     <div>
@@ -109,10 +116,16 @@ const App = () => {
      <strong> Search: </strong> 
     </InputWithLabel>
     
-    <ReactInate />
+    <ReactInate /> 
     <hr />
+
+    {isError && <p>something wrung</p>}
+
+    {isLoading ? (
+      <p>Loading ... </p>
+    ) : (
     <List list={searchedStories} onRemoveItem={handleRemoveStory} />
-   
+    )}
     </div>
     );
   };
