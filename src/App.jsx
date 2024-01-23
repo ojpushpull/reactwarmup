@@ -94,9 +94,15 @@ const App = () => {
       );
 
     React.useEffect(() => {
+      //if 'searchterm' is not present
+      //e.g. null, empty string undefined
+      //do nothing
+      //more generalized condition than searchTerm === ''
+      if (!searchTerm) return;
+
       dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
-    fetch(`${API_ENDPOINT}react`) //B
+    fetch(`${API_ENDPOINT}${searchTerm}`) //B
       .then((response) => response.json()) //C
         .then((result) => {
         dispatchStories({
@@ -107,7 +113,7 @@ const App = () => {
       .catch(() => 
         dispatchStories({ type: 'STORIES_FETCH_FAILURE' })
       );
-     }, []);
+     }, [searchTerm]);
     
      
 
@@ -138,9 +144,7 @@ const App = () => {
       setSearchTerm(event.target.value);
       };
 
-      const searchedStories = stories.data.filter((story) => 
-        story.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+    
 
   
   return (
@@ -166,7 +170,7 @@ const App = () => {
     {stories.isLoading ? (
       <p>Loading ... </p>
     ) : (
-    <List list={searchedStories} onRemoveItem={handleRemoveStory} />
+    <List list={stories.data} onRemoveItem={handleRemoveStory} />
     )}
     </div>
     );
